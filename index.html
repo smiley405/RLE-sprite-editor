@@ -85,6 +85,7 @@ let getColorBlock = (key, color) => `
         <div class="color-patch" style="background: ${color}" onclick='data.pendingColorKey = this.parentElement.querySelector("[title=\\"Key\\"]").value;'></div>
         <input type="text" maxlength="1" class="small" title="Key" onfocus="data.pendingColorKey = this.value;" onblur="updateColorKey(this)" value="${key}">
         <input type="text" class="medium" title="Color" onblur="updateColor(this)"  value="${color}">
+        <input type="color" class="small" title="Color picker" onchange="updateColorPicker(this)" value="${color}">
         <button onclick="removeColor(this)" title="Delete color">&xotime;</button>
     </div>`;
 
@@ -327,6 +328,17 @@ let updateColor = el => {
     let key = block.querySelector('[title="Key"]').value;
     data.colors[key] = el.value;
     block.querySelector('.color-patch').style.background = el.value;
+    block.querySelector('[title="Color picker"]').setAttribute("value", el.value);
+    el.setAttribute("value", el.value);
+    data.pendingColorKey = key;
+};
+
+let updateColorPicker = el => {
+    let block = el.parentElement;
+    let key = block.querySelector('[title="Key"]').value;
+    data.colors[key] = el.value;
+    block.querySelector('.color-patch').style.background = el.value;
+    block.querySelector('[title="Color"]').setAttribute("value", el.value);
     el.setAttribute("value", el.value);
     data.pendingColorKey = key;
 };
