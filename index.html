@@ -327,6 +327,7 @@ let updateColor = el => {
     let key = block.querySelector('[title="Key"]').value;
     data.colors[key] = el.value;
     block.querySelector('.color-patch').style.background = el.value;
+    el.setAttribute("value", el.value);
     data.pendingColorKey = key;
 };
 
