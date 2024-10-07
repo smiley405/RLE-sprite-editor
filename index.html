@@ -66,6 +66,7 @@
 <div class="block">
     <button onclick="window.location.hash = btoa(JSON.stringify(data)); copyStringToClipboard(window.location, this);">share</button>
     <button onclick="copyStringToClipboard(data.frames, this)">string</button>
+    <button onclick="copyStringToClipboard(getFramesObject(), this)">object</button>
     <button onclick="copyStringToClipboard(getCode(), this)">code</button>
     <a href="#" id="exportButton" download="spritesheet.png"><button>sheet</button></a>
 </div>
@@ -125,6 +126,16 @@ let onF = time => {
 onF();
 })();
 `;
+
+let getFramesObject = _ => `{
+   w: ${frameWidth},
+   h: ${frameHeight},
+   frames: "${data.frames}",
+   palette: ${JSON.stringify(data.colors)},
+   fps: ${data.fps}
+}
+`;
+
 
 let playing = false;
 let mask = true;
@@ -483,7 +494,7 @@ let rotateCCW = _ => {
     data.frames = frames.join('|');
     data.currentFrame = currentFrame;
 };
-
+let cd = 0;
 // the 2d drawing api
 let ctx = canvas.getContext('2d');
 //console.log(ctx);
@@ -729,8 +740,8 @@ spritesheet.addEventListener('mousedown', e => {
     }
 });
 
-canvas.addEventListener('mousedown', e => {
-
+let canvasMouseDown = false;
+let drawOnCanvas = e => {
     let viewportOffset = canvas.getBoundingClientRect();
     let left = viewportOffset.left;
     let top = viewportOffset.top;
@@ -796,6 +807,22 @@ canvas.addEventListener('mousedown', e => {
     data.frames = frames.join('|');
     onR();
     data.currentFrame = currentFrame;
+};
+
+canvas.addEventListener('mousemove', e => {
+	if (canvasMouseDown) {
+		drawOnCanvas(e);
+	}
+});
+
+canvas.addEventListener('mouseup', e => {
+	canvasMouseDown = false;
+	cd = 0;
+});
+
+canvas.addEventListener('mousedown', e => {
+	canvasMouseDown = true;
+	drawOnCanvas(e);
 });
 
 </script>
