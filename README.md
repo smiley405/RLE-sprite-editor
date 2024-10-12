@@ -12,4 +12,4 @@ If you want to install it on your phone as a PWA use the following url: https://
 
 ## How does it work?
 
-All [tips and tricks](https://supernapie.com/blog/rle-sprite-editor-tips-and-tricks/) you need are on my blog!
+All [tips and tricks](https://supernapie.com/blog/rle-sprite-editor-tips-and-tricks/) you need are on [Quinten](https://github.com/Quinten) blog!
